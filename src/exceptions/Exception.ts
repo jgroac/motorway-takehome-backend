@@ -7,6 +7,7 @@ export const errorCodes = {
 
 export const exceptionTypes = {
   notFound: 'NOT_FOUND_EXCEPTION',
+  invalidRequest: 'INVALID_REQUEST_EXCEPTION',
 } as const;
 
 type ExceptionTypes = typeof exceptionTypes[keyof typeof exceptionTypes];
