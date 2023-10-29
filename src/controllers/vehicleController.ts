@@ -2,6 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { getVehicleStateLog } from '../repository/stateLogRepository';
 import { getVehicleById } from '../repository/vehicleRepository';
 
+type VehicleResponse = {
+  id: string;
+  make: string;
+  model: string;
+  state: string;
+};
+
 export async function getVehicleState(
   req: Request,
   res: Response,
@@ -14,12 +21,14 @@ export async function getVehicleState(
     const vehicle = await getVehicleById(id);
     const stateLog = await getVehicleStateLog(id, timestamp);
 
-    res.json({
+    const response = {
       id: vehicle.id.toString(),
       make: vehicle.make,
       model: vehicle.model,
       state: stateLog.state,
-    });
+    } as VehicleResponse;
+
+    res.json(response);
   } catch (err) {
     next(err);
   }

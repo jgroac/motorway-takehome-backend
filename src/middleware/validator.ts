@@ -32,7 +32,7 @@ export default function validate(
     throw new ValidationException(
       'timestamp',
       timestamp,
-      'timestamp must be date formatted as YYYY-MM-DD HH:mm:ss ZZ',
+      'timestamp must be a date formatted as YYYY-MM-DD HH:mm:ss ZZ',
     );
   }
 

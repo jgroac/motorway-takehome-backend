@@ -207,7 +207,7 @@ cases(
         error: {
           code: 'INVALID_PARAMS',
           type: 'INVALID_REQUEST_EXCEPTION',
-          message: `timestamp must be date formatted as YYYY-MM-DD HH:mm:ss ZZ`,
+          message: `timestamp must be a date formatted as YYYY-MM-DD HH:mm:ss ZZ`,
           param: 'timestamp',
         },
       },
