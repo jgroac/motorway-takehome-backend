@@ -44,7 +44,7 @@ export class App {
     this.app.use(
       expressPino({
         level: 'info',
-        enabled: true,
+        enabled: isDev(),
       }),
     );
     this.app.use(cors());

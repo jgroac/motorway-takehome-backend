@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import dayjs from 'dayjs';
-import database from '../database/db';
+import { getVehicleStateLog } from '../repository/stateLogRepository';
+import { getVehicleById } from '../repository/vehicleRepository';
 
 export async function getVehicleState(
   req: Request,
@@ -11,28 +11,14 @@ export async function getVehicleState(
   const timestamp = req.query.timestamp as string;
 
   try {
-    const parsedDate = dayjs(timestamp, 'YYYY-MM-DD HH:mm:ss ZZ');
-    const formattedDate = parsedDate.format('YYYY-MM-DD HH:mm:ss');
-
-    const state = await database
-      .select('*')
-      .from('stateLogs')
-      .where('vehicleId', id)
-      .where('timestamp', '<=', formattedDate)
-      .orderBy('timestamp', 'desc')
-      .first();
-
-    const vehicle = await database
-      .select('*')
-      .from('vehicles')
-      .where('id', id)
-      .first();
+    const vehicle = await getVehicleById(id);
+    const stateLog = await getVehicleStateLog(id, timestamp);
 
     res.json({
       id: vehicle.id.toString(),
       make: vehicle.make,
       model: vehicle.model,
-      state: state?.state,
+      state: stateLog.state,
     });
   } catch (err) {
     next(err);
