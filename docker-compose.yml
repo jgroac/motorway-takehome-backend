@@ -11,3 +11,8 @@ services:
       - POSTGRES_DB=motorway
     ports:
       - 5432:5432
+  redis:
+    image: redis
+    container_name: motorway-test-redis
+    ports:
+      - 6379:6379

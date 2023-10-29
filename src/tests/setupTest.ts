@@ -1,5 +1,7 @@
 import database from '../database/db';
 
+jest.mock('redis', () => jest.requireActual('redis-mock'));
+
 beforeAll(async () => {
   await database.migrate.latest();
 });
