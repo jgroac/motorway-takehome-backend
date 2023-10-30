@@ -16,7 +16,10 @@ class Redis {
   async connect() {
     if (!this.connectedClient) {
       this.connectedClient = await this.client
-        .on('error', (err) => logger.error('redis Client Error', err))
+        .on('error', (err) => {
+          logger.error(`Cant connect to redis: ${err}`);
+          this.client.disconnect();
+        })
         .connect();
     }
 
@@ -46,7 +49,7 @@ class Redis {
     }
   }
 
-  async close() {
+  async disconnect() {
     await this.connectedClient?.disconnect();
   }
 }
