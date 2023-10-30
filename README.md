@@ -1,30 +1,79 @@
 # 🚗 motorway takehome test
 
-Install requirements:
+### Prerequisite:
  - docker (https://docs.docker.com/get-docker/)
+ - node 18.4 or greater (https://nodejs.org/en)
 
-To initialize this project, run `docker compose up` from the root of this project. This will build and seed the database. By default the database runs on port `5432` and is also exposed on `5432`, if you want to change this you can update `docker-compose.yml`.
 
-### Scripts
+### Getting started
 
-#### `npm run dev`
+1. To initialize this project, run:
 
-#### `npm run start`
+```sh
+docker-compose build && docker-compose up
+```
 
-Starts the app in production by first building the project with `npm run build`, and then executing the compiled JavaScript at `build/index.js`.
+2. Send a request GET to the following URL `http://localhost:3030/vehicles/1?timestamp=2022-09-12%2010%3A00%3A00%2B00`, example:
 
-#### `npm run build`
 
-Builds the app at `build`, cleaning the folder first.
+``` bash
+curl "http://localhost:3000/vehicles/1?timestamp=2022-09-12%2010%3A00%3A00%2B00"
+```
 
-#### `npm run test`
+3. response should be the following;
+```json
+{
+  "id":"1",
+  "make":"BMW",
+  "model":"X1",
+  "state":"quoted"
+}
+```
 
-Runs the `jest` tests once.
+### Development
+1. Install dependencies
 
-#### `npm run prettier-format`
+```sh
+npm install
+```
 
-Format your code.
+2. Create .env.test
 
-#### `npm run prettier-watch`
+```bash
+cp .env.example .env.test
+```
 
-Format your code in watch mode, waiting for file changes.
+3. Run tests
+
+```bash
+npm run test
+```
+
+
+### Folder Structure
+
+`config/`: Env variables load and configuration files.
+
+`controllers/`: Controllers that handle incoming requests and responses.
+
+`database/`: Database setup, migrations and models.
+
+`exceptions/`: App exceptions and exception handler.
+
+`middleware/`: App middlewares, but the exception handler.
+
+`repository/`: All business logic related to data.
+
+`routes/`: Routes definitions.
+
+`utils/`: It includes the logger setup.
+
+
+### Wrap-up
+- I've dockerised the app and added a redis server, to ensure we only hit the db if necessary, current TTL for the redis cache is 60s.
+- Use domain driven design and move the data layer to a repository for clarity.
+- Use knex to make easier to make easier migration creation, data retrieval, prevent sql injection and reduce test boilerplate.
+- Missing bits, that would love to add with more time:
+  - Validation to the .env variables, at the vary minimum ensure existence
+  - Performance tests
+  - Deploy it somewhere
