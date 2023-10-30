@@ -73,6 +73,7 @@ npm run test
 - I've dockerised the app and added a redis server, to ensure we only hit the db if necessary, current TTL for the redis cache is 60s.
 - Use domain driven design and move the data layer to a repository for clarity.
 - Use knex to make easier to make easier migration creation, data retrieval, prevent sql injection and reduce test boilerplate.
+- Use a simple GHA pipeline to lint and run test on push
 - Missing bits, that would love to add with more time:
   - Validation to the .env variables, at the vary minimum ensure existence
   - Performance tests
