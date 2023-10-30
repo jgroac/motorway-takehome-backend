@@ -3,7 +3,7 @@ name: motorway-takehome-backend
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   lint_and_test:
