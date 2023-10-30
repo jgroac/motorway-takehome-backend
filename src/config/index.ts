@@ -12,5 +12,5 @@ export const {
   DB_PASS,
   DB_PORT,
   DB_CLIENT,
-  REDIS_HOST,
+  REDIS_URL,
 } = process.env;

@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis';
-import { REDIS_HOST } from '../config';
+import { REDIS_URL } from '../config';
 import logger from '../utils/logger';
 
 class Redis {
@@ -9,7 +9,7 @@ class Redis {
 
   constructor(create: typeof createClient) {
     this.client = create({
-      url: REDIS_HOST,
+      url: REDIS_URL,
     });
   }
 
