@@ -1,9 +1,31 @@
 services:
+  api:
+    image: motorway-test-app
+    container_name: motorway-test-app
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+      target: motorway-test-app
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PASS=password
+      - DB_NAME=motorway
+      - DB_PORT=5432
+      - DB_CLIENT=pg
+      - REDIS_URL=redis://@redis:6379
+    depends_on:
+      - db
+      - redis
   db:
     image: motorway-test-backend
     container_name: motorway-test-backend
     build:
       context: .
+      dockerfile: Dockerfile
       target: motorway-test-backend
     environment:
       - POSTGRES_USER=user

@@ -1,0 +1,25 @@
+FROM node:18.14.0-alpine as build
+
+WORKDIR /dist
+
+COPY src ./src/
+COPY package*.json ./
+COPY tsconfig.json ./
+
+RUN npm ci
+
+RUN npm run build
+
+FROM node:18.14.0-alpine as motorway-test-app
+
+WORKDIR /api
+
+COPY --from=build ./dist/build ./build/
+COPY --from=build ./dist/node_modules ./node_modules
+COPY --from=build ./dist/package*.json ./
+
+
+EXPOSE 3000
+CMD ["npm", "start"]
+
+
